@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/controllers/auth.ts","./src/controllers/user.ts","./src/middlewares/tokenauthorization.ts","./src/routes/auth.ts","./src/routes/user.ts","./src/types/index.d.ts","./src/utils/signupvalidation.ts"],"version":"5.6.3"}
