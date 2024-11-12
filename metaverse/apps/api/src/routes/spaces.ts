@@ -7,7 +7,6 @@ import { authenticateToken } from "../middlewares/tokenAuthorization";
 const router = Router();
 
 router.post('/',authenticateToken, createSpace as unknown as RequestHandler);
-
 router.get('/all', authenticateToken, getAllSpaces as unknown as RequestHandler);
 router.get('/:spaceId', authenticateToken, getSpecificSpace as unknown as RequestHandler);
 router.post('/element', authenticateToken, addElement as unknown as RequestHandler);

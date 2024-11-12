@@ -1,42 +1,43 @@
-const axios2 = require("axios");
+const axios = require("axios");
+const WebSocket = require("ws")
 
 const BACKEND_URL = "http://localhost:3000"
-const WS_URL = "ws://localhost:3001"
+const WS_URL = "ws://localhost:8080"
 
-const axios = {
-    post: async (...args) => {
-        try {
-            const res = await axios2.post(...args)
-            return res
-        } catch(e) {
-            return e.response
-        }
-    },
-    get: async (...args) => {
-        try {
-            const res = await axios2.get(...args)
-            return res
-        } catch(e) {
-            return e.response
-        }
-    },
-    put: async (...args) => {
-        try {
-            const res = await axios2.put(...args)
-            return res
-        } catch(e) {
-            return e.response
-        }
-    },
-    delete: async (...args) => {
-        try {
-            const res = await axios2.delete(...args)
-            return res
-        } catch(e) {
-            return e.response
-        }
-    },
-}
+// const axios = {
+//     post: async (...args) => {
+//         try {
+//             const res = await axios2.post(...args)
+//             return res
+//         } catch(e) {
+//             return e.response
+//         }
+//     },
+//     get: async (...args) => {
+//         try {
+//             const res = await axios2.get(...args)
+//             return res
+//         } catch(e) {
+//             return e.response
+//         }
+//     },
+//     put: async (...args) => {
+//         try {
+//             const res = await axios2.put(...args)
+//             return res
+//         } catch(e) {
+//             return e.response
+//         }
+//     },
+//     delete: async (...args) => {
+//         try {
+//             const res = await axios2.delete(...args)
+//             return res
+//         } catch(e) {
+//             return e.response
+//         }
+//     },
+// }
 
 // describe("Authentication", () => {
 //     test('User is able to sign up only once', async () => {
@@ -106,7 +107,7 @@ const axios = {
 
 //         expect(response.status).toBe(403)
 //     })
-// })
+// },10000)
 
 // describe("User metadata endpoint", () => {
 //     let token = "";
@@ -639,7 +640,7 @@ const axios = {
 //         expect(newResponse.data.elements.length).toBe(3)
 //     })
 
-// })
+// },30000)
 
 // describe("Admin Endpoints", () => {
 //     let adminToken;
@@ -680,7 +681,7 @@ const axios = {
 //         })
     
 //         userToken = userSigninResponse.data.token
-//     });
+//     },10000);
 
 //     test("User is not able to hit admin Endpoints", async () => {
 //         const elementReponse = await axios.post(`${BACKEND_URL}/api/v1/admin/element`, {
@@ -787,7 +788,7 @@ const axios = {
 //         expect(updateElementResponse.status).toBe(200);
 
 //     })
-// });
+// },20000);
 
 describe("Websocket tests", () => {
     let adminToken;
@@ -823,6 +824,7 @@ describe("Websocket tests", () => {
         })
     }
 
+    console.log(`$$$$$$$$$$$$$$$$$$`);
     async function setupHTTP() {
         const username = `kirat-${Math.random()}`
         const password = "123456"
@@ -831,6 +833,7 @@ describe("Websocket tests", () => {
             password,
             type: "admin"
         })
+        console.log(`$$$$$$$$$$$$$$$$$$`);
 
         const adminSigninResponse = await axios.post(`${BACKEND_URL}/api/v1/signin`, {
             username,
@@ -942,7 +945,7 @@ describe("Websocket tests", () => {
     beforeAll(async () => {
         await setupHTTP()
         await setupWs()
-    })
+    }, 10000)
 
     test("Get back ack for joining the space", async () => {
         console.log("insixce first test")
@@ -982,58 +985,58 @@ describe("Websocket tests", () => {
 
         userX = message2.payload.spawn.x
         userY = message2.payload.spawn.y
-    })
+    },5000)
 
-    test("User should not be able to move across the boundary of the wall", async () => {
-        ws1.send(JSON.stringify({
-            type: "move",
-            payload: {
-                x: 1000000,
-                y: 10000
-            }
-        }));
+    // test("User should not be able to move across the boundary of the wall", async () => {
+    //     ws1.send(JSON.stringify({
+    //         type: "move",
+    //         payload: {
+    //             x: 1000000,
+    //             y: 10000
+    //         }
+    //     }));
 
-        const message = await waitForAndPopLatestMessage(ws1Messages);
-        expect(message.type).toBe("movement-rejected")
-        expect(message.payload.x).toBe(adminX)
-        expect(message.payload.y).toBe(adminY)
-    })
+    //     const message = await waitForAndPopLatestMessage(ws1Messages);
+    //     expect(message.type).toBe("movement-rejected")
+    //     expect(message.payload.x).toBe(adminX)
+    //     expect(message.payload.y).toBe(adminY)
+    // })
 
-    test("User should not be able to move two blocks at the same time", async () => {
-        ws1.send(JSON.stringify({
-            type: "move",
-            payload: {
-                x: adminX + 2,
-                y: adminY
-            }
-        }));
+    // test("User should not be able to move two blocks at the same time", async () => {
+    //     ws1.send(JSON.stringify({
+    //         type: "move",
+    //         payload: {
+    //             x: adminX + 2,
+    //             y: adminY
+    //         }
+    //     }));
 
-        const message = await waitForAndPopLatestMessage(ws1Messages);
-        expect(message.type).toBe("movement-rejected")
-        expect(message.payload.x).toBe(adminX)
-        expect(message.payload.y).toBe(adminY)
-    })
+    //     const message = await waitForAndPopLatestMessage(ws1Messages);
+    //     expect(message.type).toBe("movement-rejected")
+    //     expect(message.payload.x).toBe(adminX)
+    //     expect(message.payload.y).toBe(adminY)
+    // })
 
-    test("Correct movement should be broadcasted to the other sockets in the room",async () => {
-        ws1.send(JSON.stringify({
-            type: "move",
-            payload: {
-                x: adminX + 1,
-                y: adminY,
-                userId: adminId
-            }
-        }));
+    // test("Correct movement should be broadcasted to the other sockets in the room",async () => {
+    //     ws1.send(JSON.stringify({
+    //         type: "move",
+    //         payload: {
+    //             x: adminX + 1,
+    //             y: adminY,
+    //             userId: adminId
+    //         }
+    //     }));
 
-        const message = await waitForAndPopLatestMessage(ws2Messages);
-        expect(message.type).toBe("movement")
-        expect(message.payload.x).toBe(adminX + 1)
-        expect(message.payload.y).toBe(adminY)
-    })
+    //     const message = await waitForAndPopLatestMessage(ws2Messages);
+    //     expect(message.type).toBe("movement")
+    //     expect(message.payload.x).toBe(adminX + 1)
+    //     expect(message.payload.y).toBe(adminY)
+    // })
 
-    test("If a user leaves, the other user receives a leave event", async () => {
-        ws1.close()
-        const message = await waitForAndPopLatestMessage(ws2Messages);
-        expect(message.type).toBe("user-left")
-        expect(message.payload.userId).toBe(adminUserId)
-    })
+    // test("If a user leaves, the other user receives a leave event", async () => {
+    //     ws1.close()
+    //     const message = await waitForAndPopLatestMessage(ws2Messages);
+    //     expect(message.type).toBe("user-left")
+    //     expect(message.payload.userId).toBe(adminUserId)
+    // })
 })

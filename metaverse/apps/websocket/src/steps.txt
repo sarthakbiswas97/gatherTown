@@ -1,0 +1,18 @@
+
+
+
+// join space
+// socket connection -> validation for user and space existence -> joins space -> inform the user and all the users
+// for each new connection store -> which user joined (userId) -> which space (spaceId)
+// for each space keep the dimensions handy (spaceDimensions)
+// keep the users initial position handy (userPosition)
+
+// handle moves
+// get the space in which user is from 
+// check dimensions with respect to move cordinates
+// if inside bound then move otherwise reject move
+
+//before leaving store the current positins in db -> 
+// will remove the user from the space array 
+// and clear all the in memory spaces
+// and close the connection for that user 
