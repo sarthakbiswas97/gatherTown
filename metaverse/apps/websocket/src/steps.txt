@@ -1,6 +1,4 @@
 
-
-
 // join space
 // socket connection -> validation for user and space existence -> joins space -> inform the user and all the users
 // for each new connection store -> which user joined (userId) -> which space (spaceId)
@@ -8,9 +6,13 @@
 // keep the users initial position handy (userPosition)
 
 // handle moves
-// get the space in which user is from 
-// check dimensions with respect to move cordinates
-// if inside bound then move otherwise reject move
+// boundary check
+// move should not be more than 1 distance and diagonally
+// if the distance is a perfect number than its a possible move 
+// if the ditance from current to the future position is an imaginary/non-perfect sq. no. then reject the move
+// if inside bound and all checks then move otherwise reject move
+
+
 
 //before leaving store the current positins in db -> 
 // will remove the user from the space array 

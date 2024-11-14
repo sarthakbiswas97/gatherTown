@@ -1,6 +1,6 @@
 import WebSocket, {WebSocketServer} from "ws";
 import http from "http";
-import { handleJoinSpace, handleMove } from "./handler";
+import { handleJoinSpace, handleMove, handleCloseConnection } from "./handler";
 
 const server = http.createServer();
 const wss = new WebSocketServer({server});
@@ -23,6 +23,10 @@ wss.on("connection", (ws) => {
     });
 
     console.log(`hello from websocket`);
+    
+    ws.on("close",async () => {
+        handleCloseConnection();
+    })
     
 });
 
