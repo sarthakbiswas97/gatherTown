@@ -1,0 +1,5 @@
+.github
+.git
+node_modules
+.build
+packages/db/.env
