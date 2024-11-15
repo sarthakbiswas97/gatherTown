@@ -2,7 +2,10 @@
   "compilerOptions": {
     "target": "es2016",
     /* Modules */
-    "rootDir": "./src",                                  /* Specify the root folder within your source files. */
+    "rootDir": "./src",    
+    "declaration": true,  
+    "declarationMap": true,                            /* Specify the root folder within your source files. */
+    "outDir": "./dist",
     "module": "NodeNext",
     "moduleDetection": "force",
     "moduleResolution": "NodeNext",                    

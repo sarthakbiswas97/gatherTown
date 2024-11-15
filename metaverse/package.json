@@ -5,7 +5,11 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prisma:generate" : "cd packages/db && npm run db:generate",
+    "start:api":"cd apps/api && npm start",
+    "start:ws": "cd apps/websocket && npm start"
+    
   },
   "devDependencies": {
     "dotenv-cli": "^7.4.2",

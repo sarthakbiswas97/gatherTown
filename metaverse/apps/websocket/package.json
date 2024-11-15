@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "node dist/index.js",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,14 +17,16 @@
     "@types/ws": "^8.5.13",
     "nodemon": "^3.x.x",
     "ts-node": "^10.x.x",
-    "typescript": "^5.x.x"
+    "typescript": "^5.x.x",
+    "@types/jsonwebtoken": "^9.0.7"
+
   },
   "dependencies": {
     "@repo/db": "*",
     "dotenv": "^16.4.5",
     "redis": "^4.7.0",
-    "websocket": "^1.0.0",
-    "ws": "^8.18.0"
+    "ws": "^8.18.0",
+    "jsonwebtoken": "^9.0.2"
   }
 }
 

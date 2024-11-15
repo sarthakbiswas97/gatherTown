@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "@repo/db";
 import { SignupSchema, SigninSchema } from "../utils/signupValidation";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
